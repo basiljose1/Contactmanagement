@@ -1,5 +1,5 @@
 # Contactmanagement
-This is an application to manage email contacts:
-Import contacts from XL to db
-Front end for contact add
-Front end for XL file upload
+This is an application to manage email contacts: </br>
+Import contacts from XL to db </br>
+Front end to add contacts </br>
+Front end for XL file upload </br>
