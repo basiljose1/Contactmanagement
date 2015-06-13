@@ -19,8 +19,9 @@ from contacts import views
 
 
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^contacts/', include('contacts.urls',namespace='contacts')),
-    #url(r'^list/', include('contacts.urls',namespace='contacts')),
     url(r'^list/$', views.list, name='list'),
+    url(r'^email/$', views.contactview, name='contactview'),
  ]

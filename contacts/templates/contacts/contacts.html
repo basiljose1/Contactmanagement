@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'contacts/css/animate-custom.css' %}" />
         <meta charset="UTF-8" />
         <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
-        <title>Member Registration</title>
+        <title>Email</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
     <body>
@@ -30,7 +30,7 @@
                 </span>
                 <div class="clr"></div>
             </div><!--/ Codrops top bar -->
-			</br></br></br>
+          
             <section>				
                 <div id="container_demo" >
                     <div id="wrapper">
@@ -41,14 +41,16 @@
         </p>
     {% endif %}
 
-    <form action="{% url 'contacts:register' %}" method="post">
-	   <h1>Contacts Registration</h1>
-        <table>
-            {{ form.as_table }}
-        </table>
+    <form action="{% url 'contactview' %}" method="post">
+	   <h1>Send Mail</h1>
+	   
+        {% for field in form %}
+         {{ field.label_tag }}</br> {{ field }}</br></br>
+        {% endfor %}
+	
         {% csrf_token %}
 		<p class="signin button"> 
-		<input type="submit" value="Add Contact"/> 
+		<input type="submit" value="Send Mail"/> 
 		</p>
         
     </form>

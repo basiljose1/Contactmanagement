@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'contacts/css/animate-custom.css' %}" />
         <meta charset="UTF-8" />
         <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
-        <title>Member Registration</title>
+        <title>Contact Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
     <body>
@@ -21,61 +21,41 @@
             <!-- Codrops top bar -->
             <div class="codrops-top">
                 <a href="">
-                    <strong>&laquo; </strong>
+                    <strong>&laquo; Basil Jose </strong>
                 </a>
                 <span class="right">
                     <a href=" ">
-                        <strong></strong>
+                        <strong>9645565454</strong>
                     </a>
                 </span>
                 <div class="clr"></div>
             </div><!--/ Codrops top bar -->
           
+		  </br></br></br></br></br>
             <section>				
                 <div id="container_demo" >
                     <div id="wrapper">
                         <div id="login" class="animate form">
                             <form  action="{% url 'contacts:register' %}" autocomplete="on" method="post">
 							{% csrf_token %}
-                               <h1>Contacts Registration</h1>
+                               
                                 <p> 
-                                    <label for="usernamesignup" class="uname">
-									First Name</label>
-                                    <input id="usernamesignup" name="first_name" required="required" type="text"/>
+                                    <h1>
+									<a href="{% url 'contacts:register' %}">Add Contact</a>
+									</h1>
+                                    
                                 </p>
 								<p> 
-                                    <label for="usernamesignup" class="uname">
-									Second Name</label>
-                                    <input id="usernamesignup" name="second_name" required="required" type="text" />
+                                    <h1>
+									<a href="{% url 'contactview' %}">Email</a>
+									</h1>
+                                     
                                 </p>
 								<p> 
-                                    <label for="usernamesignup" class="uname" >
-									DOB</label>
-                                    <input id="usernamesignup" name="second_name" required="required" type="date" />
+                                    <h1>
+									<a href="{% url 'list' %}">Upload Excel</a>
+                                    </h1>
                                 </p>
-								<p> 
-                                    <label for="usernamesignup" class="uname" >
-									Gender</label>
-                                    <input id="usernamesignup" name="gender" required="required" type="text" />
-                                </p>
-								<p> 
-                                    <label for="usernamesignup" class="uname" >
-									Organization</label>
-                                    <input id="usernamesignup" name="organization" required="required" type="text" />
-                                </p>
-                                <p> 
-                                    <label for="emailsignup" class="youmail" >
-									Your email</label>
-                                    <input id="emailsignup" name="email" required="required" type="email" placeholder="mysupermail@mail.com"/> 
-                                </p>
-								<p> 
-                                    <label for="usernamesignup" class="uname">
-									Group Name</label>
-                                    <input id="usernamesignup" name="group_name" required="required" type="text" />
-                                </p>
-                                <p class="signin button"> 
-									<input type="submit" value="Add Contact"/> 
-								</p>
                             </form>
                         </div>
 						
