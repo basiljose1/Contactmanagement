@@ -10,9 +10,12 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 
+import os
+import zipfile
+
 from django.core.mail import send_mail, BadHeaderError
 
-import xlrd  
+import xlrd, datetime
 from contacts.models import Document,Group
 from contacts.forms import DocumentForm
 
@@ -46,27 +49,63 @@ def register(request):
 
 test ='c'
 
+    
+
 def list(request):    
    if request.method == 'POST':
       form = DocumentForm(request.POST, request.FILES)
       if form.is_valid():
-         newdoc = Document(docfile = request.FILES['docfile'])
-         newdoc.save()
-         newdoc = newdoc.docfile.name
-         newdoc = str(newdoc)
-         wb = xlrd.open_workbook(newdoc)
-         sh = wb.sheet_by_index(0)
-         c = 1
-         while c < len(sh.col(0)):
-            ffirst_name = sh.col_values(0)[c]
-            flast_name = sh.col_values(1)[c]
-            femail = sh.col_values(2)[c]
-            fdob = str(sh.col_values(3)[c])
-            fgender = sh.col_values(4)[c]
-            forganization = sh.col_values(5)[c]
-            p = Name(first_name=ffirst_name, last_name=flast_name, email=femail, dob='1984-10-26', gender=fgender, organization=forganization )
-            p.save()
-            c=c+1
+         filename = str(request.FILES['docfile'])
+         if filename.endswith('.zip'):
+         #tmpdir = tempfile.mkdtemp()
+         #log.warn('Extracting in %s', tmpdir)
+         #old_wd = os.getcwd()
+         #os.chdir(tmpdir)
+           filename = request.FILES['docfile']
+           z = zipfile.ZipFile(filename, "r")
+           filename=z.namelist()[0]
+           z.extractall()
+         # going in the directory
+             #subdir = os.path.join(tmpdir, os.listdir(tmpdir)[0])
+             #os.chdir(subdir)
+             #log.warn('Now working in %s', subdir)
+           wb = xlrd.open_workbook(filename)
+           sh = wb.sheet_by_index(0)
+           c = 1
+           while c < len(sh.col(0)):
+                 ffirst_name = sh.col_values(0)[c]
+                 flast_name = sh.col_values(1)[c]
+                 femail = sh.col_values(2)[c]
+                 fdob = sh.col_values(3)[c]
+                 fdob_datetime = datetime.datetime(*xlrd.xldate_as_tuple(fdob, wb.datemode))
+                 fgender = sh.col_values(4)[c]
+                 forganization = sh.col_values(5)[c]
+                 #print (fdob_datetime)
+                 p = Name(first_name=ffirst_name, last_name=flast_name, email=femail, dob=fdob_datetime, gender=fgender, organization=forganization )
+                 p.save()
+                 c=c+1
+           os.remove(filename)
+         else:
+           newdoc = Document(docfile = request.FILES['docfile'])
+           newdoc.save()
+           newdoc = newdoc.docfile.name
+           filename= str(newdoc)
+           wb = xlrd.open_workbook(filename)
+           sh = wb.sheet_by_index(0)
+           c = 1
+           while c < len(sh.col(0)):
+                 ffirst_name = sh.col_values(0)[c]
+                 flast_name = sh.col_values(1)[c]
+                 femail = sh.col_values(2)[c]
+                 fdob = sh.col_values(3)[c]
+                 fdob_datetime = datetime.datetime(*xlrd.xldate_as_tuple(fdob, wb.datemode))
+                 fgender = sh.col_values(4)[c]
+                 forganization = sh.col_values(5)[c]
+                 #print (fdob_datetime)
+                 p = Name(first_name=ffirst_name, last_name=flast_name, email=femail, dob=fdob_datetime, gender=fgender, organization=forganization )
+                 p.save()
+                 c=c+1
+           os.remove(filename)
          # Redirect to the document list after POST
       return HttpResponseRedirect(reverse('contacts.views.list'))
    else:
