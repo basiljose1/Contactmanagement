@@ -123,7 +123,6 @@ def list(request):
 
 
 def contactview(request):
-            print ("called")
             if request.method == 'POST':
                 form = EmailForm(request.POST)
                 if form.is_valid():
